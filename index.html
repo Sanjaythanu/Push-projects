@@ -2,50 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple JS Task Manager Task Manager new</title>
+  <title>Simple Timer</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    input { padding: 5px; }
-    button { padding: 5px 10px; margin-left: 5px; }
-    li { margin: 5px 0; }
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    h1 { font-size: 50px; }
+    button { padding: 10px 20px; margin-top: 20px; font-size: 16px; }
   </style>
 </head>
 <body>
-  <h2>Simple Task Manager new</h2>
-  <input type="text" id="taskInput" placeholder="Enter task">
-  <button onclick="addTask()">Add</button>
-  
-  <ul id="taskList"></ul>
+  <h1 id="timer">0</h1>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
 
   <script>
-    let tasks = [];
+    let count = 0;
+    let interval;
 
-    function renderTasks() {
-      const list = document.getElementById("taskList");
-      list.innerHTML = "";
-      tasks.forEach((task, index) => {
-        const li = document.createElement("li");
-        li.textContent = task;
-        
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "Delete";
-        delBtn.onclick = () => {
-          tasks.splice(index, 1);
-          renderTasks();
-        };
-        
-        li.appendChild(delBtn);
-        list.appendChild(li);
-      });
+    function startTimer() {
+      if (!interval) {
+        interval = setInterval(() => {
+          count++;
+          document.getElementById("timer").textContent = count;
+        }, 1000);
+      }
     }
 
-    function addTask() {
-      const input = document.getElementById("taskInput");
-      if (input.value.trim() !== "") {
-        tasks.push(input.value.trim());
-        input.value = "";
-        renderTasks();
-      }
+    function stopTimer() {
+      clearInterval(interval);
+      interval = null;
     }
   </script>
 </body>
